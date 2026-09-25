@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="FinTrust Business & Data Intelligence — colorful banking analytics case study by Vitalis Ndung'u Gitonga">
+<title>FinTrust | Banking Data Intelligence</title>
+<style>
+:root{
+  --ink:#10213d; --muted:#60708a; --white:#fff; --bg:#f5f8ff;
+  --purple:#6c4df6; --blue:#1888ff; --cyan:#19c7c9; --pink:#f04f9d;
+  --orange:#ff9b3f; --green:#18b978; --yellow:#ffd45c;
+  --shadow:0 18px 55px rgba(36,54,100,.12); --radius:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:15px/1.7 Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:
+ radial-gradient(circle at 5% 0,#d9d0ff 0,transparent 24%),
+ radial-gradient(circle at 100% 12%,#c9f4ff 0,transparent 23%),var(--bg)}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+.container{width:min(1180px,92%);margin:auto}
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(18px);border-bottom:1px solid #dce5f5}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:21px;font-weight:900;letter-spacing:-.6px}.logo span{color:var(--purple)}
+.links{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;font-weight:700;color:#52617a}
+.links a:hover{color:var(--purple)}
+.hero{padding:86px 0 65px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 13px;border-radius:999px;background:#fff;border:1px solid #ddd9ff;color:var(--purple);font-weight:850;font-size:12px;box-shadow:0 8px 25px #6652d218}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 6px #f04f9d18}
+h1{font-size:clamp(45px,6.4vw,78px);line-height:1;letter-spacing:-4px;margin:20px 0 18px}
+.gradient{background:linear-gradient(100deg,var(--purple),var(--blue),var(--cyan),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:18px;color:var(--muted);max-width:720px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:13px;font-weight:800;border:1px solid #d8e0f0;background:#fff}
+.btn.primary{color:#fff;border:0;background:linear-gradient(100deg,var(--purple),var(--blue));box-shadow:0 12px 30px #6c4df633}
+.hero-card{position:relative;background:linear-gradient(145deg,#1d255e,#5639b6 52%,#0ca9c8);border-radius:34px;padding:18px;box-shadow:0 30px 70px #493bb84d;transform:rotate(1.2deg)}
+.hero-card img{display:block;width:100%;border-radius:23px;background:#fff}
+.floating{position:absolute;background:#fff;border-radius:18px;padding:13px 16px;box-shadow:var(--shadow);font-weight:850}
+.float-a{left:-28px;top:35px}.float-b{right:-25px;bottom:35px}
+section{padding:74px 0}
+.section-head{max-width:760px;margin-bottom:30px}
+.kicker{font-size:11px;font-weight:900;letter-spacing:1.5px;color:var(--purple);text-transform:uppercase}
+h2{font-size:clamp(30px,4vw,46px);line-height:1.08;letter-spacing:-2px;margin:8px 0 12px}
+h3{margin:0 0 8px;font-size:19px;line-height:1.25}
+.section-head p,.card p{color:var(--muted)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.metric{padding:23px;border-radius:var(--radius);color:#fff;min-height:145px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.metric:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;background:#fff2;right:-30px;top:-30px}
+.metric:nth-child(1){background:linear-gradient(135deg,#6246ea,#8b65ff)}
+.metric:nth-child(2){background:linear-gradient(135deg,#078ee8,#26c6df)}
+.metric:nth-child(3){background:linear-gradient(135deg,#f06b8f,#ff9f4a)}
+.metric:nth-child(4){background:linear-gradient(135deg,#12a875,#42d8a1)}
+.metric .num{font-size:32px;font-weight:950;letter-spacing:-1px}.metric .label{font-size:12px;opacity:.86;font-weight:700}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:rgba(255,255,255,.88);border:1px solid #dfe7f4;border-radius:var(--radius);padding:25px;box-shadow:var(--shadow)}
+.question{border-top:5px solid var(--purple)}
+.question:nth-child(2){border-top-color:var(--blue)}.question:nth-child(3){border-top-color:var(--cyan)}
+.question:nth-child(4){border-top-color:var(--pink)}.question:nth-child(5){border-top-color:var(--orange)}.question:nth-child(6){border-top-color:var(--green)}
+.pills{display:flex;flex-wrap:wrap;gap:9px}.pill{padding:7px 11px;border-radius:999px;background:#eef2ff;color:#4d42a8;font-weight:800;font-size:12px}
+.table-wrap{overflow:auto;border-radius:20px;border:1px solid #dce5f5;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:700px}th,td{padding:13px 15px;text-align:left;border-bottom:1px solid #edf1f7}th{background:#f3f5ff;color:#4d42a8;font-size:12px;text-transform:uppercase;letter-spacing:.5px}tr:last-child td{border-bottom:0}
+.callout{background:linear-gradient(110deg,#171c54,#5b35bb 55%,#0ca7c7);color:#fff;border-radius:28px;padding:30px;box-shadow:var(--shadow)}
+.callout p{color:#e9e9ff}.callout strong{color:#fff}
+.evidence{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.shot{background:#fff;border-radius:22px;padding:12px;border:1px solid #dce5f5;box-shadow:var(--shadow)}
+.shot img{width:100%;display:block;border-radius:14px;cursor:zoom-in}
+.shot figcaption{padding:11px 4px 3px;font-weight:800;color:#40516e;font-size:13px}
+.wide{grid-column:1/-1}
+.sql-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.dash{background:linear-gradient(135deg,#fff,#eef5ff);border:1px solid #dbe7f7;border-radius:28px;padding:14px;box-shadow:var(--shadow)}
+.dash img{display:block;width:100%;border-radius:18px;cursor:zoom-in}
+pre{margin:0;background:#101733;color:#dff7ff;padding:24px;border-radius:20px;overflow:auto;font:13px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace;box-shadow:inset 0 0 0 1px #ffffff12}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:step}
+.step{position:relative;padding:25px;background:#fff;border:1px solid #dfe7f4;border-radius:22px;box-shadow:var(--shadow)}
+.step:before{counter-increment:step;content:counter(step,decimal-leading-zero);display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-weight:900;margin-bottom:14px}
+.skills{display:flex;flex-wrap:wrap;gap:10px}.skill{padding:11px 14px;border-radius:14px;background:#fff;border:1px solid #dce5f5;box-shadow:0 8px 22px #334b7a0d;font-weight:800}
+footer{padding:45px 0 60px;color:#60708a;text-align:center}
+.profile{display:flex;gap:18px;align-items:center;background:#fff;border:1px solid #dce5f5;border-radius:24px;padding:18px;box-shadow:var(--shadow)}
+.profile img{width:88px;height:88px;object-fit:cover;border-radius:18px}
+.modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(8,13,31,.88);align-items:center;justify-content:center;padding:25px}
+.modal img{max-width:min(1200px,95vw);max-height:90vh;border-radius:18px;box-shadow:0 30px 80px #0008}
+.close{position:fixed;right:25px;top:20px;color:#fff;font-size:36px;cursor:pointer}
+@media(max-width:900px){.hero-grid,.grid-2,.grid-3,.evidence,.sql-grid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr 1fr}.links{display:none}.hero{padding-top:55px}}
+@media(max-width:600px){.metrics{grid-template-columns:1fr}.steps{grid-template-columns:1fr}h1{letter-spacing:-2.5px}.hero-card{transform:none}.float-a{left:10px}.float-b{right:10px}}
+</style>
+</head>
+<body>
+<nav><div class="container nav">
+  <a class="logo" href="#top">Fin<span>Trust</span> Analytics</a>
+  <div class="links">
+    <a href="#overview">Overview</a><a href="#quality">Data Quality</a><a href="#analysis">Analysis</a>
+    <a href="#evidence">Evidence</a><a href="#dashboard">Dashboard</a><a href="#method">Method</a><a href="mailto:ndunguvitalis@gmail.com">Email</a>
+  </div>
+</div></nav>
+
+<main id="top">
+<section class="hero"><div class="container hero-grid">
+  <div>
+    <span class="eyebrow"><span class="dot"></span> BANKING DATA INTELLIGENCE · JAN–MAR 2026</span>
+    <h1>FinTrust <span class="gradient">Business & Data Intelligence</span></h1>
+    <p class="lead">A practical banking analytics case study transforming customer and transaction data into meaningful KPIs, business questions, risk analysis and an executive-ready dashboard.</p>
+    <div class="actions"><a class="btn primary" href="#dashboard">Explore dashboard →</a><a class="btn" href="#analysis">View analysis</a></div>
+  </div>
+  <div class="hero-card">
+    <img src="assets/Dashboard.png" alt="FinTrust Power BI dashboard" onclick="openModal(this.src)">
+    <div class="floating float-a">12K transactions</div><div class="floating float-b">90.47% success</div>
+  </div>
+</div></section>
+
+<section id="overview"><div class="container">
+  <div class="section-head"><span class="kicker">01 · Overview</span><h2>From raw data to business intelligence</h2><p>The project is structured around practical management questions: customer behaviour, transaction performance, channel usage, transaction value, status and risk.</p></div>
+  <div class="grid-3">
+    <div class="card"><h3>Decision support</h3><p>Translate operational data into measures that can support monitoring, investigation and planning.</p></div>
+    <div class="card"><h3>Two connected datasets</h3><p>12,000 transaction records are connected to 1,500 customer records through <b>Customer_ID</b>.</p></div>
+    <div class="card"><h3>Management dashboard</h3><p>Excel / Power BI analysis includes profiling, KPI calculations, segmented analysis, validation checks and dashboard views.</p></div>
+  </div>
+  <div style="height:20px"></div>
+  <div class="metrics">
+    <div class="metric"><div class="num">12,000</div><div class="label">Transactions</div></div>
+    <div class="metric"><div class="num">1,500</div><div class="label">Customers</div></div>
+    <div class="metric"><div class="num">₦560.48M</div><div class="label">Total transaction value</div></div>
+    <div class="metric"><div class="num">90.47%</div><div class="label">Overall success rate</div></div>
+  </div>
+</div></section>
+
+<section><div class="container">
+  <div class="section-head"><span class="kicker">02 · Business Questions</span><h2>Questions behind the analysis</h2><p>The dashboard is the final layer of a broader analytical process.</p></div>
+  <div class="grid-3">
+    <div class="card question"><h3>Customer behaviour</h3><p>Which customer segments and account types contribute most to activity and value?</p></div>
+    <div class="card question"><h3>Transaction activity</h3><p>How does transaction volume change over time and by transaction type?</p></div>
+    <div class="card question"><h3>Channel performance</h3><p>Which channels generate the most usage and value, and how do success rates compare?</p></div>
+    <div class="card question"><h3>Risk patterns</h3><p>How do risk-review flags vary by transaction type, location and international status?</p></div>
+    <div class="card question"><h3>Transaction value</h3><p>What is the distribution of transaction amounts and where are high-value transactions concentrated?</p></div>
+    <div class="card question"><h3>Status performance</h3><p>What proportion of transactions are successful, failed, reversed or pending?</p></div>
+  </div>
+</div></section>
+
+<section id="quality"><div class="container">
+  <div class="section-head"><span class="kicker">03 · Data Foundation</span><h2>Data quality & preparation</h2><p>A rigorous initial data-quality audit was executed across FinTrust_Customer_Data.xlsx (1,500 records, 12 columns) and FinTrust_Transaction_Data.xlsx (12,000 records, 11 columns).</p></div>
+  <div class="grid-2">
+    <div class="card"><h3>Transaction dataset</h3><p><b>12,000 records · 11 columns</b></p><div class="pills"><span class="pill">12,000 unique Transaction_IDs</span><span class="pill">0 exact duplicates</span><span class="pill">188 rows with ≥1 missing attribute</span></div></div>
+    <div class="card"><h3>Customer dataset</h3><p><b>1,500 records · 12 columns · 0 missing values</b></p><div class="pills"><span class="pill">1,500 unique Customer_IDs</span><span class="pill">100% transaction match</span></div></div>
+  </div>
+  <div style="height:20px"></div>
+  <div class="grid-2">
+    <div class="card"><h3>Data quality audit findings</h3>
+      <p><b>100% match on Customer_ID.</b> Every customer has transaction activity.</p>
+      <p><b>Missing attributes:</b> 96 Device_Type + 96 Location missing. 188 rows have ≥1 missing attribute; 4 rows missing both.</p>
+      <p><b>Amount distribution:</b> right-skewed — Mean ₦46,706.45 · Median ₦10,305.94 · Std Dev ₦86,028.72.</p>
+      <p>High-value outliers are concentrated in Deposit (max ₦693,454.45) and Transfer (max ₦449,576.35). No zero or negative amounts.</p>
+    </div>
+    <div class="card"><h3>Data cleaning strategy · Excel / Power Query</h3>
+      <p><b>Missing values:</b> Device_Type and Location imputed as “Unspecified” to prevent silent row exclusion during GROUP BY aggregations.</p>
+      <p><b>Key standardization:</b> Customer_ID retained as primary join key; Customer_Name avoided due to name-collision risk.</p>
+      <p><b>Data types:</b> Transaction_DateTime confirmed as datetime64[ns]; Amount_NGN as floating-point numeric.</p>
+    </div>
+  </div>
+  <div style="height:24px"></div>
+  <div class="evidence">
+    <figure class="shot"><img src="assets/Row 1.png" alt="FinTrust transaction raw dataset" onclick="openModal(this.src)"><figcaption>Transaction raw dataset</figcaption></figure>
+    <figure class="shot"><img src="assets/Row 2.png" alt="FinTrust customer raw dataset" onclick="openModal(this.src)"><figcaption>Customer raw dataset</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="analysis"><div class="container">
+  <div class="section-head"><span class="kicker">04 · Data Preparation & Business Analysis</span>
+    <h2>From data-quality audit to management insight</h2>
+    <p>This section incorporates the FinTrust Customer & Transaction Analytics report: rigorous data-quality assessment, Excel/Power Query preparation, SQL business analysis, management interpretations and Power BI/DAX setup.</p>
+  </div>
+
+  <div class="callout">
+    <h3>FinTrust Data at a glance</h3>
+    <p><strong>Customer dataset:</strong> 1,500 records · 12 columns &nbsp; | &nbsp;
+    <strong>Transaction dataset:</strong> 12,000 records · 11 columns.</p>
+    <p>Customer data contains 0 missing values. Transaction data contains 96 missing Device_Type values and 96 missing Location values; 188 transaction records contain at least one missing attribute, including 4 records missing both fields.</p>
+  </div>
+
+  <div style="height:22px"></div>
+  <div class="grid-3">
+    <div class="card"><h3>Record & column counts</h3><p><b>Customers:</b> 1,500 records, 12 columns.</p><p><b>Transactions:</b> 12,000 records, 11 columns.</p></div>
+    <div class="card"><h3>Duplicate audit</h3><p>0 exact duplicate rows in both datasets. All 1,500 Customer_IDs and 12,000 Transaction_IDs are unique.</p></div>
+    <div class="card"><h3>Relational integrity</h3><p>100% Customer_ID relational match. Every customer in the customer master table has transaction activity.</p></div>
+  </div>
+
+  <div style="height:20px"></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Data-type & format integrity</h3>
+      <p><b>Transaction_DateTime:</b> correctly stored as datetime64[ns], covering 2026-01-01 to 2026-03-31.</p>
+      <p><b>Amount_NGN:</b> floating-point numeric, ranging from NGN 100.17 to NGN 693,454.45. No zero or negative amounts were detected.</p>
+    </div>
+    <div class="card">
+      <h3>Outliers & value distribution</h3>
+      <p>Amount_NGN is right-skewed: <b>Mean NGN 46,706.45</b>, <b>Median NGN 10,305.94</b>, <b>Std Dev NGN 86,028.72</b>.</p>
+      <p>High-value outliers are concentrated in <b>Deposit</b> (maximum NGN 693,454.45) and <b>Transfer</b> (maximum NGN 449,576.35).</p>
+    </div>
+  </div>
+
+  <div style="height:20px"></div>
+  <div class="card">
+    <h3>Data cleaning strategy applied in Excel / Power Query</h3>
+    <div class="grid-3">
+      <div><p><b>Missing values</b><br>Device_Type and Location were imputed as <b>“Unspecified”</b> to prevent silent row exclusion during GROUP BY aggregations.</p></div>
+      <div><p><b>Standardized keys</b><br>Customer_ID was maintained as the primary join key rather than Customer_Name because of name-collision risks.</p></div>
+      <div><p><b>Integration</b><br>The customer and transaction datasets were prepared for relational analysis using the common Customer_ID key.</p></div>
+    </div>
+  </div>
+
+  <div style="height:28px"></div>
+  <div class="section-head"><span class="kicker">SQL Business Analysis</span><h2>Business questions, results & interpretation</h2></div>
+
+  <div class="grid-2">
+    <div class="card"><h3>1. Activity & value by customer segment</h3>
+      <div class="table-wrap"><table><thead><tr><th>Segment</th><th>Customers</th><th>Txns</th><th>Total Value</th><th>Avg Value</th></tr></thead><tbody>
+      <tr><td>Everyday</td><td>711</td><td>5,644</td><td>NGN 261,458,926.49</td><td>NGN 46,325.11</td></tr>
+      <tr><td>Premium</td><td>295</td><td>2,361</td><td>NGN 107,751,208.64</td><td>NGN 45,637.95</td></tr>
+      <tr><td>Student</td><td>278</td><td>2,289</td><td>NGN 107,475,888.72</td><td>NGN 46,953.20</td></tr>
+      <tr><td>SME</td><td>216</td><td>1,706</td><td>NGN 83,791,330.99</td><td>NGN 49,115.69</td></tr>
+      </tbody></table></div>
+      <p><b>Interpretation:</b> Everyday dominates volume (47.03%) and total value (46.65%). Average transaction values remain relatively uniform at about NGN 45.6k–NGN 49.1k. The source report notes this may indicate SME customers splitting operational transactions or using personal accounts.</p>
+    </div>
+
+    <div class="card"><h3>2. Monthly transaction volume & value</h3>
+      <div class="table-wrap"><table><thead><tr><th>Month</th><th>Transactions</th><th>Total Value</th><th>Avg Value</th></tr></thead><tbody>
+      <tr><td>2026-01</td><td>4,133</td><td>NGN 188,489,418.57</td><td>NGN 45,605.96</td></tr>
+      <tr><td>2026-02</td><td>3,734</td><td>NGN 175,786,929.80</td><td>NGN 47,077.37</td></tr>
+      <tr><td>2026-03</td><td>4,133</td><td>NGN 196,201,006.48</td><td>NGN 47,471.82</td></tr>
+      </tbody></table></div>
+      <p><b>Interpretation:</b> February had a temporary 9.65% transaction-count dip, partly because it has 28 days. Average transaction size rose from NGN 45,605.96 in January to NGN 47,471.82 in March, with March recording the highest monthly gross throughput at NGN 196.2M.</p>
+    </div>
+
+    <div class="card"><h3>3. Channel usage, gross value & success rate</h3>
+      <div class="table-wrap"><table><thead><tr><th>Channel</th><th>Txns</th><th>Value</th><th>Success</th></tr></thead><tbody>
+      <tr><td>Mobile App</td><td>5,102</td><td>NGN 240,104,394.02</td><td>89.75%</td></tr>
+      <tr><td>POS</td><td>2,393</td><td>NGN 104,346,742.66</td><td>90.85%</td></tr>
+      <tr><td>Web</td><td>1,869</td><td>NGN 89,325,003.38</td><td>90.85%</td></tr>
+      <tr><td>ATM</td><td>1,747</td><td>NGN 83,942,349.56</td><td>91.70%</td></tr>
+      <tr><td>USSD</td><td>889</td><td>NGN 42,758,865.23</td><td>90.33%</td></tr>
+      </tbody></table></div>
+      <p><b>Interpretation:</b> Mobile App is the primary growth engine, representing 42.5% of transactions and NGN 240.1M processed, but it has the lowest success rate. The report identifies infrastructure stabilization on Mobile App API endpoints as a potential way to prevent revenue leakage.</p>
+    </div>
+
+    <div class="card"><h3>4. Risk review flag vs transaction status</h3>
+      <div class="table-wrap"><table><thead><tr><th>Risk Flag</th><th>Total</th><th>Successful</th><th>Failed</th><th>Reversed</th><th>Pending</th></tr></thead><tbody>
+      <tr><td>No</td><td>9,648</td><td>8,767</td><td>460 (4.77%)</td><td>266</td><td>155</td></tr>
+      <tr><td>Yes</td><td>2,352</td><td>2,089</td><td>170 (7.23%)</td><td>60</td><td>33</td></tr>
+      </tbody></table></div>
+      <p><b>Interpretation:</b> Flagged transactions have a higher failure rate (7.23% vs 4.77%), while 88.82% of flagged transactions still settle successfully. The report interprets this pattern as evidence consistent with an asynchronous post-transaction scoring flag or non-blocking alert.</p>
+    </div>
+
+    <div class="card"><h3>5. Domestic vs international risk profile</h3>
+      <div class="table-wrap"><table><thead><tr><th>Scope</th><th>Txns</th><th>Value</th><th>Avg</th><th>Risk Rate</th></tr></thead><tbody>
+      <tr><td>Domestic</td><td>11,520</td><td>NGN 540,481,570.61</td><td>NGN 46,916.80</td><td>18.88%</td></tr>
+      <tr><td>International</td><td>480</td><td>NGN 19,995,784.24</td><td>NGN 41,657.88</td><td>36.88%</td></tr>
+      </tbody></table></div>
+      <p><b>Interpretation:</b> Cross-border transactions have nearly double the risk-review rate. Because the international average ticket is slightly lower than domestic, the report attributes the pattern to geographic location/IP flags rather than raw transaction size.</p>
+    </div>
+
+    <div class="card"><h3>6. Performance & risk by transaction type</h3>
+      <div class="table-wrap"><table><thead><tr><th>Type</th><th>Txns</th><th>Value</th><th>Avg</th><th>Risk</th></tr></thead><tbody>
+      <tr><td>Transfer</td><td>3,549</td><td>NGN 237,916,703.11</td><td>NGN 67,037.67</td><td>28.49%</td></tr>
+      <tr><td>Deposit</td><td>1,328</td><td>NGN 130,985,063.85</td><td>NGN 98,633.33</td><td>16.19%</td></tr>
+      <tr><td>Card Purchase</td><td>3,033</td><td>NGN 85,863,413.11</td><td>NGN 28,309.73</td><td>13.02%</td></tr>
+      <tr><td>Cash Withdrawal</td><td>1,430</td><td>NGN 67,772,362.11</td><td>NGN 47,393.26</td><td>25.31%</td></tr>
+      <tr><td>Bill Payment</td><td>1,475</td><td>NGN 28,163,647.51</td><td>NGN 19,094.00</td><td>12.81%</td></tr>
+      <tr><td>Airtime/Data</td><td>1,185</td><td>NGN 9,776,165.16</td><td>NGN 8,249.93</td><td>15.19%</td></tr>
+      </tbody></table></div>
+      <p><b>Interpretation:</b> Transfers represent 42.45% of total value and have the highest risk-review rate (28.49%), followed by Cash Withdrawals (25.31%). The source recommends focusing surveillance rules on Transfers and Cash Outflows.</p>
+    </div>
+
+    <div class="card"><h3>7. Channel adoption across income bands</h3>
+      <p><b>Top-income band (1m+):</b> Mobile App — 467 transactions / NGN 19.46M; POS — 208; Web — 167; ATM — 151; USSD — 82.</p>
+      <p><b>Interpretation:</b> Mobile App remains the dominant channel across income bands, including high-net-worth and lower-income users. USSD is distributed across income groups rather than being limited to lower-income customers, supporting its role as a universal fallback during mobile-data outages.</p>
+    </div>
+
+    <div class="card"><h3>8. Geographic risk distribution</h3>
+      <div class="table-wrap"><table><thead><tr><th>City</th><th>Txns</th><th>Flagged</th><th>Risk</th><th>Value</th></tr></thead><tbody>
+      <tr><td>Benin City</td><td>1,451</td><td>300</td><td>20.68%</td><td>NGN 63.39M</td></tr>
+      <tr><td>Ibadan</td><td>1,550</td><td>319</td><td>20.58%</td><td>NGN 81.42M</td></tr>
+      <tr><td>Kaduna</td><td>1,481</td><td>297</td><td>20.05%</td><td>NGN 70.38M</td></tr>
+      <tr><td>Port Harcourt</td><td>1,520</td><td>301</td><td>19.80%</td><td>NGN 71.38M</td></tr>
+      <tr><td>Kano</td><td>1,526</td><td>300</td><td>19.66%</td><td>NGN 74.41M</td></tr>
+      <tr><td>Lagos</td><td>1,431</td><td>279</td><td>19.50%</td><td>NGN 63.98M</td></tr>
+      <tr><td>Enugu</td><td>1,484</td><td>280</td><td>18.87%</td><td>NGN 69.10M</td></tr>
+      <tr><td>Abuja</td><td>1,461</td><td>263</td><td>18.00%</td><td>NGN 62.05M</td></tr>
+      </tbody></table></div>
+      <p><b>Interpretation:</b> Risk rates range from 18.00% to 20.68% across the major Nigerian hubs. The report concludes that there are no extreme geographic spikes and that triggers appear systemic or rules-based across national channels.</p>
+    </div>
+  </div>
+
+  <div style="height:28px"></div>
+  <div class="section-head"><span class="kicker">Deep-dive findings</span><h2>Additional management insights</h2></div>
+  <div class="grid-3">
+    <div class="card"><h3>Cross-border transactions suffer a dual penalty</h3><p>Of 480 international transactions, 177 were flagged. Their average ticket was NGN 41,657.88 versus NGN 46,916.80 domestically. The report suggests refining the fraud-prevention engine with 3D-Secure tokens rather than relying heavily on location rules.</p></div>
+    <div class="card"><h3>SME sizing suggests product misalignment</h3><p>SME customers average NGN 49,115.69 per transaction, close to Everyday (NGN 46,325.11) and Student (NGN 46,953.20). The report suggests structured SME tiers with higher single-transaction limits and integrated batch-payment invoicing.</p></div>
+    <div class="card"><h3>Non-blocking risk review creates settlement exposure</h3><p>2,089 of 2,352 risk-flagged transactions (88.82%) successfully settle. The report describes the current mechanism as alerting rather than real-time control and proposes real-time scoring at authorization to mitigate fraud exposure.</p></div>
+    <div class="card"><h3>Mobile App dominance vs sub-par success</h3><p>Mobile App accounts for 42.52% of total volume (5,102 transactions) but has an 89.75% completion success rate. 523 transactions failed, reversed or remained pending, a 10.25% error rate.</p></div>
+  </div>
+</div></section>
+<section><div class="container">
+  <div class="section-head"><span class="kicker">05 · Evidence</span><h2>SQL query evidence & supporting analysis</h2><p>The complete evidence set is retained below, with all original query screenshots included.</p></div>
+  <div class="sql-grid">
+    <figure class="shot"><img src="assets/SQL1.png" alt="SQL customer segment query" onclick="openModal(this.src)"><figcaption>SQL 1 · Customer segment contribution</figcaption></figure>
+    <figure class="shot"><img src="assets/SQL2.png" alt="SQL monthly trends" onclick="openModal(this.src)"><figcaption>SQL 2 · Monthly trends</figcaption></figure>
+    <figure class="shot"><img src="assets/SQL3.png" alt="SQL channel success rates" onclick="openModal(this.src)"><figcaption>SQL 3 · Channel success rates</figcaption></figure>
+    <figure class="shot"><img src="assets/SQL4.png" alt="SQL risk flag versus status" onclick="openModal(this.src)"><figcaption>SQL 4 · Risk flag vs status</figcaption></figure>
+    <figure class="shot"><img src="assets/SQL5.png" alt="SQL domestic versus international" onclick="openModal(this.src)"><figcaption>SQL 5 · Domestic vs international</figcaption></figure>
+    <figure class="shot"><img src="assets/SQL6.png" alt="SQL transaction type risk" onclick="openModal(this.src)"><figcaption>SQL 6 · Transaction type risk</figcaption></figure>
+    <figure class="shot"><img src="assets/SQL7.png" alt="SQL channel by income band" onclick="openModal(this.src)"><figcaption>SQL 7 · Channel by income band</figcaption></figure>
+    <figure class="shot"><img src="assets/SQL8.png" alt="SQL geographic risk" onclick="openModal(this.src)"><figcaption>SQL 8 · Geographic risk</figcaption></figure>
+  </div>
+  <div style="height:20px"></div>
+  <h2>Power BI evidence & supporting analysis</h2>
+  <div class="evidence">
+    <figure class="shot"><img src="assets/evidence2.png" alt="Customer segment evidence" onclick="openModal(this.src)"><figcaption>Customer segment evidence</figcaption></figure>
+    <figure class="shot"><img src="assets/evidence4 (2).png" alt="Channel status counts" onclick="openModal(this.src)"><figcaption>Channel status counts</figcaption></figure>
+    <figure class="shot"><img src="assets/evidence4.png" alt="Channel status percentages" onclick="openModal(this.src)"><figcaption>Channel status percentages</figcaption></figure>
+    <figure class="shot"><img src="assets/evidence3.png" alt="Risk flag counts" onclick="openModal(this.src)"><figcaption>Risk flag counts</figcaption></figure>
+    <figure class="shot"><img src="assets/evidence3 (2).png" alt="Risk flag percentages" onclick="openModal(this.src)"><figcaption>Risk flag percentages</figcaption></figure>
+    <figure class="shot"><img src="assets/evidence1.png" alt="International versus risk evidence" onclick="openModal(this.src)"><figcaption>International vs risk evidence</figcaption></figure>
+  </div>
+</div></section>
+
+<section><div class="container">
+  <div class="section-head"><span class="kicker">06 · Management Insights</span><h2>Management-ready observations</h2><p>Descriptive findings and actionable interpretations from the completed analysis.</p></div>
+  <div class="grid-3">
+    <div class="card"><span class="kicker">CHANNEL</span><h3>Mobile App leads activity</h3><p>5,102 transactions (42.5% of volume) and ₦240.1M processed — yet the lowest success rate at 89.75%. API latency and timeout issues disproportionately harm customer trust.</p></div>
+    <div class="card"><span class="kicker">VALUE + RISK</span><h3>Transfers drive value & risk</h3><p>Transfers = 42.45% of total value (₦237.9M) and highest risk rate (28.49%). Cash withdrawals follow at 25.31%.</p></div>
+    <div class="card"><span class="kicker">CONTROL</span><h3>Non-blocking risk architecture</h3><p>88.82% of flagged transactions still settle. The system acts as an alert rather than real-time control, creating potential chargeback exposure.</p></div>
+    <div class="card"><span class="kicker">CROSS-BORDER</span><h3>Dual penalty on international</h3><p>Risk rate nearly doubles (36.88% vs 18.88%). Rules appear driven by location/IP headers. The source analysis suggests integrating 3D-Secure tokens.</p></div>
+    <div class="card"><span class="kicker">SME</span><h3>Product misalignment signal</h3><p>SME average ticket (₦49.1k) mirrors retail segments. Opportunity for dedicated SME packages with higher limits and batch invoicing.</p></div>
+    <div class="card"><span class="kicker">GEOGRAPHY</span><h3>Even risk distribution</h3><p>Risk rates range only 18–20.7% across eight major cities. Triggers appear systemic rather than location-specific.</p></div>
+  </div>
+</div></section>
+
+<section id="dashboard"><div class="container">
+  <div class="section-head"><span class="kicker">07 · Executive Dashboard</span><h2>Excel & Power BI analysis</h2><p>The project workbook combines KPI cards, trends, channel analysis, customer/account views, location analysis and status/risk summaries. Power BI DAX measures were also defined for interactive exploration.</p></div>
+  <div class="dash"><img src="assets/Dashboard.png" alt="FinTrust Power BI Interactive Dashboard" onclick="openModal(this.src)"></div>
+  <div style="height:22px"></div>
+  <div class="grid-2">
+    <div class="card"><h3>Dashboard coverage</h3><p><b>12K txns · 1.5K customers · ₦560.48M · 90.47% success · 19.60% risk</b></p><div class="pills"><span class="pill">Transaction trend</span><span class="pill">Status bars</span><span class="pill">Channel volume</span><span class="pill">Overall status donut</span><span class="pill">Risk by location</span><span class="pill">Location × type matrix</span></div></div>
+    <div class="card"><h3>Power BI data model & core DAX measures</h3><pre>Total Customers   = DISTINCTCOUNT(customers[Customer_ID])
+Total Transactions = COUNT(transactions[Transaction_ID])
+Total Value        = SUM(transactions[Amount_NGN])
+AVG Value          = AVERAGE(transactions[Amount_NGN])
+Success Rate       = CALCULATE(COUNT(transactions[Transaction_ID]),
+                      transactions[Transaction_Status]="Successful")
+                   / [Total Transactions]
+Risk Review Rate   = CALCULATE(COUNT(transactions[Transaction_ID]),
+                      transactions[Risk_Review_Flag]="Yes")
+                   / [Total Transactions]</pre></div>
+  </div>
+</div></section>
+
+<section id="method"><div class="container">
+  <div class="section-head"><span class="kicker">08 · Methodology</span><h2>How the project was built</h2><p>A repeatable workflow from business understanding through validation and presentation.</p></div>
+  <div class="steps">
+    <div class="step"><h3>Business understanding</h3><p>Defined business questions, decisions supported and relevant stakeholders.</p></div>
+    <div class="step"><h3>Data profiling & quality audit</h3><p>Reviewed records, fields, data types, missing values, duplicates, relationships and outliers.</p></div>
+    <div class="step"><h3>Data cleaning & integration</h3><p>Imputed missing Device_Type/Location as “Unspecified”. Joined transaction and customer data on Customer_ID.</p></div>
+    <div class="step"><h3>KPI and analysis design</h3><p>Defined measures for transactions, value, success, risk, customers, channels, status and geography.</p></div>
+    <div class="step"><h3>SQL analysis & validation</h3><p>Built segmented queries and reconciliation checks to verify totals and breakdowns.</p></div>
+    <div class="step"><h3>Dashboard storytelling</h3><p>Converted findings into an executive-friendly visual summary (Excel + Power BI) and portfolio case study.</p></div>
+  </div>
+</div></section>
+
+<section><div class="container">
+  <div class="section-head"><span class="kicker">09 · Toolkit</span><h2>Skills demonstrated</h2><p>Practical analytics capabilities demonstrated through the project.</p></div>
+  <div class="skills">
+    <span class="skill">Microsoft Excel</span><span class="skill">Power Query</span><span class="skill">SQL</span><span class="skill">MySQL Workbench</span><span class="skill">Power BI</span><span class="skill">DAX</span><span class="skill">Data Profiling</span><span class="skill">Data Cleaning</span><span class="skill">Descriptive Statistics</span><span class="skill">KPI Design</span><span class="skill">Dashboarding</span><span class="skill">Data Quality</span><span class="skill">Business Analysis</span><span class="skill">Data Storytelling</span>
+  </div>
+  <div style="height:24px"></div>
+  <div class="callout"><h3>The analytical goal</h3><p>The goal was not simply to calculate numbers, but to structure data so management can ask better questions, monitor performance and investigate areas requiring attention.</p></div>
+  <div style="height:24px"></div>
+  <div class="profile"><img src="assets/profilepic.png" alt="Vitalis Ndung'u Gitonga"><div><h3>Vitalis Ndung'u Gitonga</h3><p style="margin:0;color:var(--muted)">Data Analyst · Statistical Analysis · AI & Data Operations</p><p style="margin:4px 0 0"><a href="mailto:ndunguvitalis@gmail.com" style="color:var(--purple);font-weight:850">ndunguvitalis@gmail.com</a></p></div></div>
+</div></section>
+</main>
+
+<footer><div class="container">© 2026 FinTrust Analytics Case Study · Vitalis Ndung\'u Gitonga · <a href="mailto:ndunguvitalis@gmail.com">ndunguvitalis@gmail.com</a></div></footer>
+
+<div class="modal" id="imageModal" onclick="if(event.target===this)closeModal()">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <img id="modalImg" alt="Expanded evidence">
+</div>
+<script>
+function openModal(src){document.getElementById('imageModal').style.display='flex';document.getElementById('modalImg').src=src}
+function closeModal(){document.getElementById('imageModal').style.display='none'}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()})
+</script>
+</body>
+</html>
